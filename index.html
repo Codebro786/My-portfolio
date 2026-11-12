@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Samit's Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: fixed index column on the left, work laid out as proof sheets with crop marks and numbered pins that match the decision lists beside them. */
+:root{
+  --bg:#EFF1F4; --surface:#F8F9FB; --fg:#14181F; --muted:#566070; --line:#CDD2DA;
+  --accent:#C8321B; --ink2:#2A4A86; --accent-soft:#F6E3DF;
+  --display:'Bricolage Grotesque','Arial Narrow',system-ui,sans-serif;
+  --body:'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101216; --surface:#171A20; --fg:#E7E9ED; --muted:#9AA3B2; --line:#2A2F38;
+    --accent:#FF7358; --ink2:#8FB0FF; --accent-soft:#2A1B18; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101216; --surface:#171A20; --fg:#E7E9ED; --muted:#9AA3B2; --line:#2A2F38;
+  --accent:#FF7358; --ink2:#8FB0FF; --accent-soft:#2A1B18; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--fg); font:400 16px/1.6 var(--body);
+  padding-block:32px 72px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  margin:0;
+}
+a{color:inherit}
+a:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.shell{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:40px}
+@media (min-width:900px){.shell{grid-template-columns:200px minmax(0,1fr);gap:64px}}
+
+/* Index column */
+.index{display:flex;flex-direction:column;gap:20px;min-width:0}
+@media (min-width:900px){.index{position:sticky;top:calc(32px + env(safe-area-inset-top, 0px));align-self:start}}
+.who{font:700 28px/1 var(--display);letter-spacing:-.02em}
+.who small{display:block;margin-top:8px;font:400 14px/1.4 var(--body);color:var(--muted);letter-spacing:0}
+.index nav{display:flex;flex-wrap:wrap;gap:6px 18px}
+@media (min-width:900px){.index nav{flex-direction:column;gap:2px}}
+.index nav a{font-size:14px;text-decoration:none;color:var(--muted);padding:4px 0;border-bottom:1px solid transparent;width:max-content}
+.index nav a:hover{color:var(--fg);border-bottom-color:var(--accent)}
+
+main{display:flex;flex-direction:column;gap:96px;min-width:0}
+section{min-width:0}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.02em}
+h1{font-size:clamp(34px,5.6vw,60px);line-height:1.04;font-weight:700;max-width:18ch}
+h2{font-size:clamp(26px,3.4vw,36px);line-height:1.1;font-weight:700}
+h3{font-size:22px;line-height:1.2;font-weight:700}
+.lede{max-width:62ch;color:var(--muted);font-size:17px;margin:24px 0 0}
+.lede strong{color:var(--fg);font-weight:600}
+.sec-intro{max-width:62ch;color:var(--muted);margin:12px 0 0}
+
+/* Hero facts */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px 32px;margin-top:40px;padding-top:24px;border-top:1px solid var(--line)}
+.facts dt{font:500 12px/1.3 var(--mono);color:var(--muted);margin-bottom:4px}
+.facts dd{margin:0;font-weight:500}
+
+/* Project sheets */
+.projects{display:flex;flex-direction:column;gap:72px;margin-top:40px}
+.project{display:grid;grid-template-columns:1fr;gap:28px;min-width:0}
+@media (min-width:1000px){.project{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:44px;align-items:start}}
+.sheet{position:relative;background:var(--surface);border:1px solid var(--line);padding:16px;min-width:0}
+.sheet svg{display:block;width:100%;height:auto}
+.m{position:absolute;width:14px;height:14px;border:0 solid var(--accent);pointer-events:none}
+.m.tl{top:-9px;left:-9px;border-top-width:1.5px;border-left-width:1.5px}
+.m.tr{top:-9px;right:-9px;border-top-width:1.5px;border-right-width:1.5px}
+.m.bl{bottom:-9px;left:-9px;border-bottom-width:1.5px;border-left-width:1.5px}
+.m.br{bottom:-9px;right:-9px;border-bottom-width:1.5px;border-right-width:1.5px}
+.cap{font:400 12px/1.4 var(--mono);color:var(--muted);margin-top:12px}
+
+.meta{display:flex;flex-wrap:wrap;gap:6px 8px;margin:14px 0 0;padding:0;list-style:none}
+.meta li{font:500 12px/1 var(--mono);padding:6px 8px;border:1px solid var(--line);color:var(--muted)}
+.role{margin:16px 0 0;font-weight:500}
+.summary{color:var(--muted);margin:8px 0 0}
+.decisions{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:18px;counter-reset:d}
+.decisions li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:12px;counter-increment:d}
+.decisions li::before{content:counter(d);width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--surface);font:600 12px/24px var(--mono);text-align:center;margin-top:2px}
+.decisions b{display:block;font-weight:600}
+.decisions span{color:var(--muted)}
+
+/* SVG tokens */
+.s-box{fill:var(--bg);stroke:var(--fg);stroke-width:1.2}
+.s-dash{fill:none;stroke:var(--muted);stroke-width:1.2;stroke-dasharray:5 4}
+.s-mine{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.8}
+.s-line{stroke:var(--fg);stroke-width:1.2;fill:none}
+.s-bus{fill:var(--ink2);stroke:none}
+.s-fill{fill:var(--line)}
+.s-t{fill:var(--fg);font:500 12px var(--body)}
+.s-tm{fill:var(--muted);font:400 11px var(--mono)}
+.s-tw{fill:var(--bg);font:500 12px var(--mono)}
+.s-pin{fill:var(--accent)}
+.s-pt{fill:var(--surface);font:600 11px var(--mono);text-anchor:middle}
+
+/* Rubric */
+.rubric{display:grid;grid-template-columns:1fr;gap:0;margin-top:32px;border-top:1px solid var(--line)}
+.crit{display:grid;grid-template-columns:1fr;gap:10px;padding:20px 0;border-bottom:1px solid var(--line);min-width:0}
+@media (min-width:760px){.crit{grid-template-columns:200px minmax(0,1fr);gap:32px}}
+.crit h3{font-size:18px}
+.crit .w{display:block;font:400 12px/1.4 var(--mono);color:var(--muted);margin-top:4px}
+.anchors{display:grid;grid-template-columns:1fr;gap:8px;margin:0;padding:0;list-style:none}
+@media (min-width:600px){.anchors{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}}
+.anchors li{font-size:14px;color:var(--muted)}
+.anchors em{display:block;font:500 12px/1.4 var(--mono);color:var(--fg);font-style:normal;margin-bottom:2px}
+
+.compare{margin-top:48px;background:var(--surface);border:1px solid var(--line);padding:20px;position:relative}
+@media (min-width:600px){.compare{padding:28px}}
+.compare h3{font-size:20px}
+.compare .hint{color:var(--muted);font-size:14px;margin:6px 0 0}
+.rows{margin-top:20px;display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:1fr;gap:8px;padding:14px 0;border-top:1px solid var(--line)}
+@media (min-width:700px){.row{grid-template-columns:150px minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center}}
+.row .nm{font-weight:600;font-size:15px}
+.row .nm small{display:block;font:400 11px/1.4 var(--mono);color:var(--muted)}
+.slider{display:grid;grid-template-columns:24px minmax(0,1fr) 20px;gap:10px;align-items:center;font:500 12px var(--mono);color:var(--muted)}
+.slider output{color:var(--fg);text-align:right}
+input[type=range]{width:100%;accent-color:var(--accent);min-width:0;margin:0}
+.verdict{margin-top:20px;padding:16px;background:var(--bg);border-left:3px solid var(--accent)}
+.totals{display:flex;flex-wrap:wrap;gap:8px 32px;font:500 14px var(--mono)}
+.totals b{font:700 26px var(--display);letter-spacing:-.02em;margin-left:6px;font-variant-numeric:tabular-nums}
+.verdict p{margin:10px 0 0;max-width:68ch}
+
+/* Tools */
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px;margin-top:32px}
+.tools h3{font-size:16px;font-family:var(--body);letter-spacing:0;font-weight:600}
+.tools ul{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:15px}
+.note{margin-top:28px;color:var(--muted);font-size:14px}
+
+/* Contact */
+.contact-list{display:flex;flex-wrap:wrap;gap:10px 28px;margin:24px 0 0;padding:0;list-style:none}
+.contact-list a,.contact-list span{font-weight:500;border-bottom:1.5px solid var(--accent);text-decoration:none;word-break:break-word}
+.contact-list button{font:inherit;font-size:13px;margin-left:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:2px 8px;cursor:pointer}
+footer{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="index">
+    <div class="who">Samit<small>BTech CSE, Jaypee University of Information Technology</small></div>
+    <nav aria-label="Sections">
+      <a href="#work">Work</a>
+      <a href="#lens">How I review</a>
+      <a href="#tools">Tools</a>
+      <a href="#contact" id="nav-contact" hidden>Contact</a>
+    </nav>
+  </aside>
+
+  <main>
+    <section id="top">
+      <h1>I build interfaces, then write down why each choice was made.</h1>
+      <p class="lede"><strong>Student developer working mostly solo.</strong> My projects include a local voice assistant for Windows, a full-stack restaurant page rebuilt to match a reference, and two modules of a team ride-sharing app. Each one comes with written reasons for its design and technology decisions.</p>
+      <dl class="facts">
+        <div><dt>Studying</dt><dd>BTech Computer Science, JUIT</dd></div>
+        <div><dt>Builds on</dt><dd>Windows, RTX 5070 for local AI</dd></div>
+        <div><dt>Default stance</dt><dd>Free and open-source tools, modular code</dd></div>
+      </dl>
+    </section>
+
+    <section id="work">
+      <h2>Selected work</h2>
+      <p class="sec-intro">Numbered pins on each drawing match the numbered decisions beside it. Team projects list only what I built.</p>
+      <div class="projects" id="projects"></div>
+    </section>
+
+    <section id="lens">
+      <h2>How I review work</h2>
+      <p class="sec-intro">A sample rubric for comparing two pieces of creative work, written the way I would hand it to another reviewer. Each score has to be defensible in a sentence.</p>
+      <div class="rubric" id="rubric"></div>
+
+      <div class="compare" aria-labelledby="cmp-title">
+        <h3 id="cmp-title">Try it on two versions</h3>
+        <p class="hint">Example scores to start from. Move any slider and the explanation rewrites itself.</p>
+        <div class="rows" id="rows"></div>
+        <div class="verdict" aria-live="polite">
+          <div class="totals"><span>Version A<b id="ta">0</b></span><span>Version B<b id="tb">0</b></span></div>
+          <p id="vtext"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="tools">
+      <h2>Tools</h2>
+      <div class="tools" id="toolgrid"></div>
+      <p class="note">Everything listed here is free or open source.</p>
+    </section>
+
+    <section id="contact" hidden>
+      <h2>Contact</h2>
+      <ul class="contact-list" id="contact-list"></ul>
+    </section>
+
+    <footer>One static page. No trackers, no frameworks.</footer>
+  </main>
+</div>
+
+<script>
+/* ---------- CONFIG: edit these, the rest of the page follows ---------- */
+var CONFIG = {
+  contact: { email: "", github: "", linkedin: "" }   // leave a field empty to hide it
+};
+
+var PROJECTS = [
+  {
+    id: "jarvis",
+    name: "JARVIS-X",
+    summary: "A local-first, privacy-focused AI desktop assistant for Windows, built to use the GPU in my own machine.",
+    role: "Solo project. Design, architecture and code.",
+    stack: ["Python","PySide6","Ollama (llama3.2)","Faster-Whisper (CUDA)","Piper TTS","SQLite + SQLAlchemy","Custom event bus"],
+    cap: "Architecture sketch. Dashed box is the planned roadmap.",
+    decisions: [
+      ["Run the models locally","llama3.2 through Ollama, Faster-Whisper on CUDA and Piper for speech all run on the RTX 5070. Nothing needs a cloud account, which suits a privacy-first assistant and keeps the whole stack free."],
+      ["A small pub/sub event bus, no LangChain","Modules talk through events instead of calling each other, so a speech engine or model can be swapped without touching the rest. I left out heavy frameworks on purpose to keep the dependencies few and the flow readable."],
+      ["Six phases, in order","Voice, screen intelligence, desktop control, knowledge and RAG, agent mode, then multi-agent. Each phase builds on the one before it."]
+    ],
+    extra: "Ships with an SVG architecture diagram and a written rationale for every design decision."
+  },
+  {
+    id: "restaurant",
+    name: "Restaurant details page",
+    summary: "A full-stack recreation of a restaurant details webpage, matched closely to the reference design.",
+    role: "Solo project. Frontend, backend and data.",
+    stack: ["Next.js 15","TypeScript","Tailwind CSS","Framer Motion","Shadcn UI","FastAPI","MySQL","SQLAlchemy"],
+    cap: "Layout sketch of the recreated page.",
+    decisions: [
+      ["Match the reference closely","Spacing, type and layout follow the original page, with Framer Motion for the interactions and Shadcn UI as the component base."],
+      ["Cart keyed by a session UUID","Visitors can fill a cart without creating an account. FastAPI stores it in MySQL through SQLAlchemy."],
+      ["Typed API layer and seeded data","TypeScript types describe every API call, and the database is seeded, so the page shows real content as soon as the backend starts."]
+    ],
+    extra: "Delivered as a complete folder structure, not loose snippets."
+  },
+  {
+    id: "ride",
+    name: "JUIT Smart Ride",
+    summary: "A group academic ride-sharing app. I built two modules of it, each from interface to database.",
+    role: "Team project. My part: payment integration, and rating and feedback.",
+    stack: ["FastAPI","MongoDB","Vanilla JS"],
+    cap: "Highlighted boxes are the modules I built.",
+    decisions: [
+      ["Payment integration","Frontend and backend, so a completed ride can be paid for inside the app."],
+      ["Rating and feedback","Frontend and backend, so riders can rate a ride and leave feedback."],
+      ["Built to the team's stack","FastAPI, MongoDB and plain JavaScript, matching what the rest of the group was using."]
+    ],
+    extra: ""
+  }
+];
+
+var RUBRIC = [
+  { name:"Brief fit", w:3, a:["Ignores what was asked","Meets the brief and adds nothing","Meets it and makes one clear choice the brief left open"] },
+  { name:"Hierarchy", w:2, a:["Everything has the same weight","The main item is clear, the rest is muddy","The eye path is obvious within three seconds"] },
+  { name:"Craft", w:2, a:["Misaligned, uneven spacing, rough edges","Clean in most places, a few slips","Alignment, spacing and finishing hold up when zoomed in"] },
+  { name:"Consistency", w:1, a:["Similar things look different","Mostly consistent, with exceptions","One system applied everywhere, including edge cases"] },
+  { name:"Reasoning", w:2, a:["No reason can be given for the choices","Reasons given for some choices","Each major choice has a reason that fits the audience"] }
+];
+var SAMPLE_A = [4,3,4,5,3], SAMPLE_B = [3,5,3,3,5];
+
+var TOOLS = [
+  ["Interface", ["Next.js 15","TypeScript","Tailwind CSS","Framer Motion","Shadcn UI","Vanilla JS","PySide6"]],
+  ["Backend and data", ["FastAPI","SQLAlchemy","MySQL","MongoDB","SQLite"]],
+  ["Local AI", ["Ollama","Faster-Whisper (CUDA)","Piper TTS"]]
+];
+
+/* ---------- Drawings ---------- */
+function pin(n,x,y){return '<g><circle class="s-pin" cx="'+x+'" cy="'+y+'" r="11"/><text class="s-pt" x="'+x+'" y="'+(y+4)+'">'+n+'</text></g>';}
+var ART = {
+  jarvis: function(){return '<svg viewBox="0 0 520 300" role="img" aria-label="JARVIS-X architecture: speech, language model and voice modules connected through an event bus to storage, interface and planned modules">'
+    +'<rect class="s-box" x="30" y="30" width="130" height="52"/><text class="s-t" x="95" y="53" text-anchor="middle">Faster-Whisper</text><text class="s-tm" x="95" y="70" text-anchor="middle">speech in, CUDA</text>'
+    +'<rect class="s-box" x="195" y="30" width="130" height="52"/><text class="s-t" x="260" y="53" text-anchor="middle">Ollama</text><text class="s-tm" x="260" y="70" text-anchor="middle">llama3.2, local</text>'
+    +'<rect class="s-box" x="360" y="30" width="130" height="52"/><text class="s-t" x="425" y="53" text-anchor="middle">Piper TTS</text><text class="s-tm" x="425" y="70" text-anchor="middle">speech out</text>'
+    +'<path class="s-line" d="M95 82V130M260 82V130M425 82V130M95 170V218M260 170V218M425 170V218"/>'
+    +'<rect class="s-bus" x="30" y="130" width="460" height="40"/><text class="s-tw" x="260" y="155" text-anchor="middle">event bus  publish / subscribe</text>'
+    +'<rect class="s-box" x="30" y="218" width="130" height="52"/><text class="s-t" x="95" y="241" text-anchor="middle">SQLite</text><text class="s-tm" x="95" y="258" text-anchor="middle">SQLAlchemy</text>'
+    +'<rect class="s-box" x="195" y="218" width="130" height="52"/><text class="s-t" x="260" y="241" text-anchor="middle">PySide6</text><text class="s-tm" x="260" y="258" text-anchor="middle">desktop UI</text>'
+    +'<rect class="s-dash" x="360" y="218" width="130" height="52"/><text class="s-t" x="425" y="241" text-anchor="middle">Roadmap</text><text class="s-tm" x="425" y="258" text-anchor="middle">screen, RAG, agents</text>'
+    +pin(1,325,30)+pin(2,490,130)+pin(3,490,218)+'</svg>';},
+  restaurant: function(){return '<svg viewBox="0 0 520 300" role="img" aria-label="Wireframe of the restaurant page: header, hero, menu list and cart panel">'
+    +'<rect class="s-box" x="20" y="14" width="480" height="272"/>'
+    +'<rect class="s-fill" x="20" y="14" width="480" height="28"/><rect class="s-box" x="32" y="22" width="56" height="12"/><rect class="s-box" x="420" y="22" width="68" height="12"/>'
+    +'<rect class="s-fill" x="32" y="54" width="456" height="70"/><text class="s-t" x="48" y="84">Restaurant name</text><text class="s-tm" x="48" y="102">rating, hours, address</text>'
+    +'<text class="s-tm" x="32" y="148">MENU</text>'
+    +'<g><rect class="s-box" x="32" y="156" width="290" height="36"/><rect class="s-box" x="32" y="198" width="290" height="36"/><rect class="s-box" x="32" y="240" width="290" height="36"/>'
+    +'<rect class="s-fill" x="40" y="164" width="20" height="20"/><rect class="s-fill" x="40" y="206" width="20" height="20"/><rect class="s-fill" x="40" y="248" width="20" height="20"/>'
+    +'<rect class="s-fill" x="70" y="166" width="120" height="6"/><rect class="s-fill" x="70" y="208" width="140" height="6"/><rect class="s-fill" x="70" y="250" width="100" height="6"/>'
+    +'<rect class="s-fill" x="70" y="178" width="80" height="5"/><rect class="s-fill" x="70" y="220" width="90" height="5"/><rect class="s-fill" x="70" y="262" width="70" height="5"/></g>'
+    +'<rect class="s-mine" x="340" y="156" width="148" height="120"/><text class="s-t" x="352" y="178">Cart</text><text class="s-tm" x="352" y="196">session-id</text>'
+    +'<rect class="s-fill" x="352" y="206" width="100" height="6"/><rect class="s-fill" x="352" y="220" width="80" height="6"/><rect class="s-box" x="352" y="244" width="124" height="22"/>'
+    +pin(1,488,54)+pin(2,488,156)+pin(3,32,156)+'</svg>';},
+  ride: function(){return '<svg viewBox="0 0 520 300" role="img" aria-label="Ride flow: ride completed, then payment, then rating and feedback, with payment and rating built by me">'
+    +'<rect class="s-dash" x="20" y="30" width="480" height="70"/><text class="s-tm" x="32" y="50">rest of the app, built by the team</text>'
+    +'<rect class="s-box" x="40" y="58" width="110" height="32"/><text class="s-t" x="95" y="78" text-anchor="middle">Book ride</text>'
+    +'<rect class="s-box" x="205" y="58" width="110" height="32"/><text class="s-t" x="260" y="78" text-anchor="middle">Ride</text>'
+    +'<rect class="s-box" x="370" y="58" width="110" height="32"/><text class="s-t" x="425" y="78" text-anchor="middle">Completed</text>'
+    +'<path class="s-line" d="M150 74H205M315 74H370M425 90V140"/>'
+    +'<rect class="s-mine" x="40" y="140" width="210" height="78"/><text class="s-t" x="56" y="168">Payment</text><text class="s-tm" x="56" y="188">frontend + backend</text>'
+    +'<rect class="s-mine" x="270" y="140" width="210" height="78"/><text class="s-t" x="286" y="168">Rating and feedback</text><text class="s-tm" x="286" y="188">frontend + backend</text>'
+    +'<path class="s-line" d="M425 140H380M250 179H270"/>'
+    +'<rect class="s-box" x="40" y="240" width="440" height="32"/><text class="s-tm" x="260" y="260" text-anchor="middle">FastAPI  ·  MongoDB  ·  vanilla JS</text>'
+    +pin(1,40,140)+pin(2,480,140)+pin(3,40,240)+'</svg>';}
+};
+
+/* ---------- Render ---------- */
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+document.getElementById('projects').innerHTML = PROJECTS.map(function(p){
+  return '<article class="project" aria-labelledby="p-'+p.id+'">'
+    +'<div><div class="sheet"><i class="m tl"></i><i class="m tr"></i><i class="m bl"></i><i class="m br"></i>'+ART[p.id]()+'</div><div class="cap">'+esc(p.cap)+'</div></div>'
+    +'<div><h3 id="p-'+p.id+'">'+esc(p.name)+'</h3><p class="summary">'+esc(p.summary)+'</p><p class="role">'+esc(p.role)+'</p>'
+    +'<ul class="meta">'+p.stack.map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ul>'
+    +'<ol class="decisions">'+p.decisions.map(function(d){return '<li><div><b>'+esc(d[0])+'</b><span>'+esc(d[1])+'</span></div></li>';}).join('')+'</ol>'
+    +(p.extra?'<p class="note">'+esc(p.extra)+'</p>':'')
+    +'</div></article>';
+}).join('');
+
+document.getElementById('rubric').innerHTML = RUBRIC.map(function(r){
+  return '<div class="crit"><div><h3>'+esc(r.name)+'</h3><span class="w">weight '+r.w+' of '+RUBRIC.reduce(function(a,b){return a+b.w;},0)+'</span></div>'
+    +'<ul class="anchors"><li><em>1</em>'+esc(r.a[0])+'</li><li><em>3</em>'+esc(r.a[1])+'</li><li><em>5</em>'+esc(r.a[2])+'</li></ul></div>';
+}).join('');
+
+document.getElementById('rows').innerHTML = RUBRIC.map(function(r,i){
+  function sl(k,v){return '<label class="slider" for="'+k+i+'"><span>'+k.toUpperCase()+'</span><input type="range" id="'+k+i+'" min="1" max="5" step="1" value="'+v+'" data-k="'+k+'" data-i="'+i+'"><output id="o'+k+i+'">'+v+'</output></label>';}
+  return '<div class="row"><div class="nm">'+esc(r.name)+'<small>weight '+r.w+'</small></div>'+sl('a',SAMPLE_A[i])+sl('b',SAMPLE_B[i])+'</div>';
+}).join('');
+
+document.getElementById('toolgrid').innerHTML = TOOLS.map(function(t){
+  return '<div><h3>'+esc(t[0])+'</h3><ul>'+t[1].map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>';
+}).join('');
+
+/* ---------- Comparator logic ---------- */
+function scores(k){return RUBRIC.map(function(_,i){return +document.getElementById(k+i).value;});}
+function avg(arr){var tw=0,s=0;RUBRIC.forEach(function(r,i){tw+=r.w;s+=r.w*arr[i];});return s/tw;}
+function names(list){
+  if(list.length===1)return list[0];
+  return list.slice(0,-1).join(', ')+' and '+list[list.length-1];
+}
+function update(){
+  var a=scores('a'),b=scores('b');
+  RUBRIC.forEach(function(_,i){document.getElementById('oa'+i).textContent=a[i];document.getElementById('ob'+i).textContent=b[i];});
+  var ta=avg(a),tb=avg(b);
+  document.getElementById('ta').textContent=ta.toFixed(1);
+  document.getElementById('tb').textContent=tb.toFixed(1);
+  var aLead=[],bLead=[];
+  RUBRIC.forEach(function(r,i){var d=a[i]-b[i];if(d>0)aLead.push({n:r.name,v:d,w:r.w});else if(d<0)bLead.push({n:r.name,v:-d,w:r.w});});
+  function fmt(l){return names(l.sort(function(x,y){return y.v*y.w-x.v*x.w;}).map(function(x){return x.n+' (+'+x.v+')';}));}
+  var out;
+  if(!aLead.length&&!bLead.length){out='Every score matches, so the two versions tie on this rubric. Look for a difference the rubric does not capture.';}
+  else{
+    var gap=Math.abs(ta-tb), lead=ta>tb?'A':'B';
+    var head=gap<0.05?'The weighted scores are level.':'Version '+lead+' is ahead by '+gap.toFixed(1)+' on the weighted score.';
+    var parts=[];
+    if(aLead.length)parts.push('A leads on '+fmt(aLead));
+    if(bLead.length)parts.push('B leads on '+fmt(bLead));
+    var heavy=RUBRIC.reduce(function(m,r){return r.w>m.w?r:m;},RUBRIC[0]);
+    var di=RUBRIC.indexOf(heavy), dd=a[di]-b[di];
+    var tail=dd===0?' The two versions are level on '+heavy.name+', the heaviest criterion, so the other differences decide it.':' '+heavy.name+' carries the most weight, and '+(dd>0?'A':'B')+' leads there.';
+    out=head+' '+parts.join('; ')+'.'+tail;
+  }
+  document.getElementById('vtext').textContent=out;
+}
+document.getElementById('rows').addEventListener('input',update);
+update();
+
+/* ---------- Contact ---------- */
+(function(){
+  var c=CONFIG.contact, items=[];
+  if(c.email)items.push('<li><span id="em">'+esc(c.email)+'</span><button type="button" id="copy-em">Copy</button></li>');
+  if(c.github)items.push('<li><a href="'+esc(c.github)+'" target="_blank" rel="noopener">GitHub</a></li>');
+  if(c.linkedin)items.push('<li><a href="'+esc(c.linkedin)+'" target="_blank" rel="noopener">LinkedIn</a></li>');
+  if(!items.length)return;
+  document.getElementById('contact').hidden=false;
+  document.getElementById('nav-contact').hidden=false;
+  document.getElementById('contact-list').innerHTML=items.join('');
+  var btn=document.getElementById('copy-em');
+  if(btn)btn.addEventListener('click',function(){
+    function done(t){btn.textContent=t;setTimeout(function(){btn.textContent='Copy';},1500);}
+    try{navigator.clipboard.writeText(c.email).then(function(){done('Copied');},function(){done('Select text');});}
+    catch(e){done('Select text');}
+  });
+})();
+</script>
+</body>
+</html>
